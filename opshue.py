@@ -177,4 +177,4 @@ def start():
     arq = open('shopping.list')
     arq.close()
   see('see task list')
-  print "       Type 'help' to see some example queries."
+  print "huepy: Type 'help' to see some example queries."
