@@ -84,7 +84,6 @@ def put(string):
 def remove(string):
   words = string.split(' ')
   if len(words) > 3 and words[len(words)-1] == 'list':
-    a = False
     list_name = words[len(words)-2]+ '.list'
     item = ''
     for i in range(1, len(words)-3): item += words[i]
