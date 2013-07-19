@@ -56,7 +56,7 @@ def see(string):
     list_name = words[1]+ '.list'
     if os.path.exists(list_name):
       with open(list_name, 'r') as arq:
-  i = 1
+	i = 1
 	print 'huepy: Showing %s list' % words[1]
 	for line in arq:
 	  print '        '+'%i. %s' % (i, line.rstrip('\n'))
@@ -78,26 +78,30 @@ def put(string):
     print 'huepy: %s added in your %s list' % (item, words[len(words)-2])
     see('see %s' % words[len(words)-2])
   else:
-    print 'huepy: You need to follow the format: put item_name in list_name.'
+    print 'huepy: You need to follow the format: put item_name in list_name list.'
     print '       Example: put milk in shopping list'
 
 def remove(string):
   words = string.split(' ')
   if len(words) > 3 and words[len(words)-1] == 'list':
+    a = False
     list_name = words[len(words)-2]+ '.list'
     item = ''
     for i in range(1, len(words)-3): item += words[i]
     if not os.path.exists(list_name):
       print 'huepy: There is no %s list.' % words[len(words)-2]
-    with open(list_name, 'r+') as arq:
+    with open(list_name, 'r') as arq:
       lines = arq.readlines()
+    with open(list_name, 'w') as arq:
+      arq.close()
+    with open(list_name, 'a') as arq:
       for line in lines:
-	if line != item:
+	if not line.strip().startswith(item.strip()):
 	  arq.write(line)
     print 'huepy: %s removed from your %s list' % (item, words[len(words)-2])
     see('see %s' % words[len(words)-2])
   else:
-    print 'huepy: You need to follow the format: remove item_name from list_name.'
+    print 'huepy: You need to follow the format: remove item_name from list_name list.'
     print '       Example: remove milk from shopping list'
 
 def weather():
@@ -154,5 +158,11 @@ def hue(): print 10 * (6 * 'HUE' + ' ' + 3 * 'BR' + '\n'), 'gibe money plox'
 def start():
   print "huepy: Hello!"
   weather()
+  if not os.path.exists('task.list'):
+    arq = open('task.list')
+    arq.close()
+  if not os.path.exists('shopping.list'):
+    arq = open('shopping.list')
+    arq.close()
   see('see task list')
   print "       Type 'help' to see some example queries."
