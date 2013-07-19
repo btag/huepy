@@ -26,7 +26,6 @@ def example():
   print "        Type 'bye' or 'leave' if you want me to stop bothering you"
   print "        Type 'weather' or 'forecast' to see the wheather forecast"
   lmexample()
-  print "        WARNING: the commands that open browsers have bugs"
   print "        You can access facebook by typing 'facebook' or 'face', and 9gag typing '9gag'"
   print "        You can also google something like the following example: 'google how does a microwave work'"
 
