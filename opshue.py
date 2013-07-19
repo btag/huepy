@@ -26,6 +26,7 @@ def example():
   print "        Type 'bye' or 'leave' if you want me to stop bothering you"
   print "        Type 'weather' or 'forecast' to see the wheather forecast"
   lmexample()
+  print "        WARNING: the commands that open browsers have bugs"
   print "        You can access facebook by typing 'facebook' or 'face', and 9gag typing '9gag'"
   print "        You can also google something like the following example: 'google how does a microwave work'"
 
@@ -77,7 +78,7 @@ def put(string):
     print 'huepy: %s added in your %s list' % (item, words[len(words)-2])
     see('see %s' % words[len(words)-2])
   else:
-    print 'huepy: You need to follow the format: put item_name in list_name.'
+    print 'huepy: You need to follow the format: put item_name in list_name list.'
     print '       Example: put milk in shopping list'
 
 def remove(string):
@@ -88,30 +89,46 @@ def remove(string):
     for i in range(1, len(words)-3): item += words[i]+' '
     if not os.path.exists(list_name):
       print 'huepy: There is no %s list.' % words[len(words)-2]
-    with open(list_name, 'r+') as arq:
+    with open(list_name, 'r') as arq:
       lines = arq.readlines()
+    with open(list_name, 'w') as arq:
+      arq.close()
+    with open(list_name, 'a') as arq:
       for line in lines:
-	if line != item:
+	if not line.strip().startswith(item.strip()):
 	  arq.write(line)
     print 'huepy: %s removed from your %s list' % (item, words[len(words)-2])
     see('see %s' % words[len(words)-2])
   else:
-    print 'huepy: You need to follow the format: remove item_name from list_name.'
+    print 'huepy: You need to follow the format: remove item_name from list_name list.'
     print '       Example: remove milk from shopping list'
 
 def weather():
   print 'huepy: Accessing weather information...'
-  aResp = urllib2.urlopen("http://www.weather.com/weather/today/Florianopolis+BRXX0091:1:BR");
-  web_pg = aResp.read();
-  pattern = ['<span class="wx-value" itemprop="weather-phrase">(.*)</span>', '<p class="wx-text">(.*) High (.*)</p>', '<p class="wx-text">(.*) Low (.*)</p>']
-  value = ['Conditions', 'Today', 'Tonight']
-  
-  con = re.search(pattern[0], web_pg).group(1)
-  tod = re.search(pattern[1], web_pg).group(1)
-  ton = re.search(pattern[2], web_pg).group(1)
-  print '       Conditions:  %s' % con
-  print '       Today:       %s' % tod
-  print '       Tonight:     %s' % ton
+  try:
+    aResp = urllib2.urlopen("http://www.weather.com/weather/today/Florianopolis+BRXX0091:1:BR")
+    web_pg = aResp.read()
+    pattern = ['<span class="wx-value" itemprop="weather-phrase">(.*)</span>', '<p class="wx-text">(.*) High (.*)</p>', '<p class="wx-text">(.*) Low (.*)</p>']
+    errors = 0
+    
+    try:
+      con = re.search(pattern[0], web_pg).group(1)
+      print '       Conditions:  %s' % con
+    except:
+      errors += 1
+    try:
+      tod = re.search(pattern[1], web_pg).group(1)
+      print '       Today:       %s' % tod
+    except:
+      errors += 1
+    try:
+      ton = re.search(pattern[2], web_pg).group(1)
+      print '       Tonight:     %s' % ton
+    except:
+      errors += 1
+    if errors == 3: print '       My apologies, but I could not get none of the weather informations.'
+  except:
+    print '       It was not possible get the weather data. Please verify your conection.'
 
 def google(string):
   words = string.split(' ')
@@ -153,5 +170,11 @@ def hue(): print 10 * (6 * 'HUE' + ' ' + 3 * 'BR' + '\n'), 'gibe money plox'
 def start():
   print "huepy: Hello!"
   weather()
+  if not os.path.exists('task.list'):
+    arq = open('task.list')
+    arq.close()
+  if not os.path.exists('shopping.list'):
+    arq = open('shopping.list')
+    arq.close()
   see('see task list')
   print "       Type 'help' to see some example queries."
