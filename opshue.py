@@ -14,9 +14,9 @@ def noaccent(string):
 
 def lmexample():
   print "        Type 'see list_name list' to see what's in the list"
-  print "        Type 'put item in list_name list' to add an item in a list"
+  print "        Type 'add item to list_name list' to add an item in a list"
   print "          In this case, if the list not exists, it will be created"
-  print "          Example: 'put cookies in shopping list'"
+  print "          Example: 'add cookies to shopping list'"
   print "        Type 'remove item from list_name list'"
   print "          Example: 'remove wash car from task list'"
 
@@ -40,11 +40,11 @@ def llists():
 
 def checkdata(data):
   words = data.split(' ')
-  firstwords = ['see', 'put', 'remove', 'google', 'wikipedia', 'desciclopedia', 'search', 'wiki', 'desciclo', 'des', 'face']
+  firstwords = ['see', 'put', 'add', 'remove', 'google', 'wikipedia', 'desciclopedia', 'search', 'wiki', 'desciclo', 'des', 'face']
   for f in firstwords:
     if words[0] == f:
       return f
-  keywords  = ['example', 'help', 'leave', 'bye', 'hue', 'version', 'lists', 'forecast', 'weather', 'facebook', '9gag', 'usq', 'start']
+  keywords  = ['example', 'help', 'leave', 'bye', 'hue', 'version', 'lists', 'forecast', 'weather', 'facebook', '9gag', 'usq', 'zoer', 'zoeir', 'zuer', 'zueir', 'start']
   for k in keywords:
     if k in data:
       return k
@@ -67,19 +67,19 @@ def see(string):
     print 'huepy: You need to tell me which list you want to see.'
     print '       Example: see task list'
 
-def put(string):
+def add(string):
   words = string.split(' ')
   if len(words) > 3 and words[len(words)-1] == 'list':
     list_name = words[len(words)-2]+ '.list'
     item = ''
     for i in range(1, len(words)-3): item += words[i]+' '
     with open(list_name, 'a') as arq:
-      arq.write(item+'\n')
+      arq.write(item.rstrip()+'\n')
     print 'huepy: %s added in your %s list' % (item, words[len(words)-2])
     see('see %s' % words[len(words)-2])
   else:
-    print 'huepy: You need to follow the format: put item_name in list_name list.'
-    print '       Example: put milk in shopping list'
+    print 'huepy: You need to follow the format: add item_name to list_name list.'
+    print '       Example: add milk to shopping list'
 
 def remove(string):
   words = string.split(' ')
@@ -110,7 +110,6 @@ def weather():
     web_pg = aResp.read()
     pattern = ['<span class="wx-value" itemprop="weather-phrase">(.*)</span>', '<p class="wx-text">(.*) High (.*)</p>', '<p class="wx-text">(.*) Low (.*)</p>']
     errors = 0
-    
     try:
       con = re.search(pattern[0], web_pg).group(1)
       print '       Conditions:  %s' % con
@@ -166,6 +165,7 @@ def gag(): wb.open('https://www.9gag.com', new=2)
 def usq(): wb.open('https://www.umsabadoqualquer.com', new=2)
 
 def hue(): print 10 * (6 * 'HUE' + ' ' + 3 * 'BR' + '\n'), 'gibe money plox'
+def zne(): print 'huepy: The zuera never ends.'
 
 def start():
   print "huepy: Hello!"
