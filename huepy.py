@@ -3,14 +3,14 @@
 
 import opshue as ops
 
-lists = ops.llists()
-version = "developing"
-
 ops.start()
 
 while True:
   a = raw_input("you: ").lower()
   #a = ops.noaccent(a)
+  #------------------#
+  import opshue as ops
+  #------------------#
   b = ops.checkdata(a)
   #if b != "no-match": print "info: match", b
   #else:               print "info: no-match"
@@ -18,16 +18,15 @@ while True:
     ops.example()
   elif a == "q" or b == "leave" or b == "bye":
     break
-  elif a == "v" or b == "version":
-    print "huepy: I'm running on %s version" % version
   elif b == "lists":
+    lists = ops.llists()
     print "huepy: You have the following lists:"
     for i in range(len(lists)):
       print "        %i. %s" % (i+1, lists[i])
   elif b == "see":
     ops.see(a)
-  elif b == "put":
-    ops.put(a)
+  elif b == "put" or b == 'add':
+    ops.add(a)
   elif b == "remove":
     ops.remove(a)
   elif b == "weather" or b == "forecast":
@@ -43,6 +42,8 @@ while True:
   elif b == "usq": ops.usq()
   elif b == "hue":
     ops.hue()
+  elif b == 'zoer' or b == 'zoeir' or b == 'zuer' or b == 'zueir':
+    ops.zne()
   elif b == "start":
     ops.start()
   else: print "huepy: I could not understand your query. You can see example queries by typing 'help'"
