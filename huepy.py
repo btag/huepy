@@ -2,15 +2,11 @@
 #-*- coding: utf-8 -*-
 
 import opshue as ops
-
 ops.start()
 
 while True:
   a = raw_input("you: ").lower()
   #a = ops.noaccent(a)
-  #------------------#
-  import opshue as ops
-  #------------------#
   b = ops.checkdata(a)
   #if b != "no-match": print "info: match", b
   #else:               print "info: no-match"
@@ -29,6 +25,8 @@ while True:
     ops.add(a)
   elif b == "remove":
     ops.remove(a)
+  elif b == "buy":
+    ops.buy(a)
   elif b == "weather" or b == "forecast":
     ops.weather()
   elif b == "google":
@@ -42,7 +40,7 @@ while True:
   elif b == "usq": ops.usq()
   elif b == "hue":
     ops.hue()
-  elif b == 'zoer' or b == 'zoeir' or b == 'zuer' or b == 'zueir':
+  elif b == 'zoer' or b == 'zoeir' or b == 'zuer' or b == 'zueir' or b == 'never ends':
     ops.zne()
   elif b == "start":
     ops.start()
